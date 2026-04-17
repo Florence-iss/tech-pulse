@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tech Pulse — Real-time IT industry news, cloud updates, and skill recommendations for technology professionals" />
+  <title>Tech Pulse — IT News & Cloud Updates Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header" id="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <h1 class="logo-text">Tech<span class="logo-accent">Pulse</span></h1>
+          <span class="logo-badge">LIVE</span>
+        </div>
+        <div class="header-actions">
+          <span class="last-updated" id="lastUpdated">Updated just now</span>
+          <button class="refresh-btn" id="themeToggle" title="Toggle theme"></button>
+          <button class="refresh-btn" id="refreshBtn" title="Refresh all data">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar" id="statsBar">
+      <div class="stat-card">
+        <div class="stat-icon">📰</div>
+        <div class="stat-info">
+          <span class="stat-value" id="totalArticles">0</span>
+          <span class="stat-label">Articles Today</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-info">
+          <span class="stat-value" id="topTrending">Loading...</span>
+          <span class="stat-label">Top Trending</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">☁️</div>
+        <div class="stat-info">
+          <span class="stat-value" id="cloudCount">0</span>
+          <span class="stat-label">Cloud Updates</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+          <span class="stat-value" id="topCategory">—</span>
+          <span class="stat-label">Hottest Skill</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-nav" id="tabNav">
+      <button class="tab-btn active" data-tab="news" id="tabNews">
+        <span class="tab-icon">🌐</span>
+        <span class="tab-text">Tech News</span>
+      </button>
+      <button class="tab-btn" data-tab="cloud" id="tabCloud">
+        <span class="tab-icon">☁️</span>
+        <span class="tab-text">Cloud</span>
+      </button>
+      <button class="tab-btn" data-tab="trending" id="tabTrending">
+        <span class="tab-icon">📈</span>
+        <span class="tab-text">Trending</span>
+      </button>
+      <button class="tab-btn" data-tab="recommendations" id="tabRecommendations">
+        <span class="tab-icon">🎓</span>
+        <span class="tab-text">Learn</span>
+      </button>
+      <button class="tab-btn" data-tab="search" id="tabSearch">
+        <span class="tab-icon">🔍</span>
+        <span class="tab-text">Search</span>
+      </button>
+      <button class="tab-btn" data-tab="bookmarks" id="tabBookmarks">
+        <span class="tab-icon">🔖</span>
+        <span class="tab-text">Saved</span>
+        <span class="bookmark-tab-badge" id="bookmarkBadge" style="display:none"></span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+
+      <!-- Tech News Tab -->
+      <section class="tab-panel active" id="panelNews">
+        <div class="panel-header">
+          <h2>Latest Technology News</h2>
+          <div class="filter-pills" id="categoryFilter">
+            <button class="pill active" data-category="all">All</button>
+            <button class="pill" data-category="ai">🤖 AI/ML</button>
+            <button class="pill" data-category="cloud">☁️ Cloud</button>
+            <button class="pill" data-category="security">🔒 Security</button>
+            <button class="pill" data-category="devops">⚙️ DevOps</button>
+            <button class="pill" data-category="data">📊 Data</button>
+            <button class="pill" data-category="technology">💻 General</button>
+          </div>
+        </div>
+        <div class="news-grid" id="newsGrid">
+          <!-- News cards rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Cloud Updates Tab -->
+      <section class="tab-panel" id="panelCloud">
+        <div class="panel-header">
+          <h2>Cloud Provider Updates</h2>
+          <div class="filter-pills" id="cloudFilter">
+            <button class="pill active" data-provider="all">All Providers</button>
+            <button class="pill pill-aws" data-provider="aws">
+              <span class="provider-dot" style="background:#ff9900"></span> AWS
+            </button>
+            <button class="pill pill-azure" data-provider="azure">
+              <span class="provider-dot" style="background:#0078d4"></span> Azure
+            </button>
+            <button class="pill pill-gcp" data-provider="gcp">
+              <span class="provider-dot" style="background:#4285f4"></span> GCP
+            </button>
+          </div>
+        </div>
+        <div class="news-grid" id="cloudGrid">
+          <!-- Cloud cards rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Trending Tab -->
+      <section class="tab-panel" id="panelTrending">
+        <div class="panel-header">
+          <h2>Trending Technologies</h2>
+          <p class="panel-subtitle">Most mentioned topics across today's tech news</p>
+        </div>
+        <div class="trending-grid" id="trendingGrid">
+          <!-- Trending cards rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Recommendations Tab -->
+      <section class="tab-panel" id="panelRecommendations">
+        <div class="panel-header">
+          <h2>🎯 Recommended Skills to Learn</h2>
+          <p class="panel-subtitle">Based on trending news demand — boost your career and job prospects</p>
+        </div>
+        <div class="recommendations-grid" id="recommendationsGrid">
+          <!-- Recommendation cards rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Search Tab -->
+      <section class="tab-panel" id="panelSearch">
+        <div class="panel-header">
+          <h2>Search Technology News</h2>
+        </div>
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search for any technology topic..." autocomplete="off" />
+          </div>
+          <div class="search-suggestions" id="searchSuggestions">
+            <span class="suggestion-chip" data-query="artificial intelligence">AI/ML</span>
+            <span class="suggestion-chip" data-query="kubernetes">Kubernetes</span>
+            <span class="suggestion-chip" data-query="cloud computing">Cloud</span>
+            <span class="suggestion-chip" data-query="cybersecurity">Security</span>
+            <span class="suggestion-chip" data-query="data engineering">Data</span>
+            <span class="suggestion-chip" data-query="DevOps">DevOps</span>
+            <span class="suggestion-chip" data-query="rust programming">Rust</span>
+            <span class="suggestion-chip" data-query="blockchain web3">Web3</span>
+          </div>
+        </div>
+        <div class="news-grid" id="searchGrid">
+          <!-- Search results rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Bookmarks Tab -->
+      <section class="tab-panel" id="panelBookmarks">
+        <div class="panel-header">
+          <h2>🔖 Saved Articles</h2>
+          <p class="panel-subtitle">Articles you've saved for later reading — stored locally on your device</p>
+        </div>
+        <div class="news-grid" id="bookmarksGrid">
+          <!-- Bookmarks rendered by JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>⚡ Tech Pulse — Powered by MCP | Data from GNews API & RSS Feeds</p>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

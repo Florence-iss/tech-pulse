@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+mcp-server/build/
+server/node_modules/
+mcp-server/node_modules/

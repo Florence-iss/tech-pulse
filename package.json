@@ -1,0 +1,20 @@
+{
+  "name": "tech-pulse",
+  "version": "1.0.0",
+  "description": "Tech Pulse — IT Industry & Cloud News Aggregator Dashboard powered by MCP",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --names \"MCP,API,WEB\" --prefix-colors \"magenta,cyan,green\" \"npm run dev:mcp\" \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:mcp": "cd mcp-server && npm run build",
+    "dev:api": "cd server && node-env-run node index.js || node index.js",
+    "dev:web": "vite --host",
+    "build": "vite build",
+    "build:server": "cd mcp-server && npm install && npm run build && cd ../server && npm install",
+    "start": "cd server && node index.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "vite": "^6.3.1"
+  }
+}

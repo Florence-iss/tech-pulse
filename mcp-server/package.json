@@ -1,0 +1,21 @@
+{
+  "name": "tech-pulse-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Tech Pulse news aggregation",
+  "type": "module",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "rss-parser": "^3.13.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.2",
+    "typescript": "^5.8.3"
+  }
+}
