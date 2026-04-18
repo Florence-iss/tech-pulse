@@ -215,10 +215,7 @@ function renderNewsCards(container, articles, showProvider = false) {
     return;
   }
 
-  const fragment = document.createDocumentFragment();
-  const wrapper = document.createElement('div');
-
-  wrapper.innerHTML = articles
+  const cardsHtml = articles
     .map((article, i) => {
       const badgeClass = getCategoryBadgeClass(article.category);
       const badgeLabel = getCategoryLabel(article.category);
@@ -260,8 +257,7 @@ function renderNewsCards(container, articles, showProvider = false) {
     .join('');
 
   // Use event delegation — safe, no inline onclick with URLs
-  container.innerHTML = '';
-  container.appendChild(wrapper);
+  container.innerHTML = cardsHtml;
 
   container.addEventListener('click', (e) => {
     const bookmarkBtn = e.target.closest('.bookmark-btn');
