@@ -42,6 +42,11 @@ function safeInt(value, fallback) {
 
 // --- API Routes ---
 
+// GET /
+app.get("/", (req, res) => {
+  res.send("🚀 Tech Pulse API is up and running! Access endpoints via /api/");
+});
+
 // GET /api/tech-news
 app.get("/api/tech-news", async (req, res) => {
   try {
