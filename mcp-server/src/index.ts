@@ -18,7 +18,7 @@ server.tool(
   "fetch_tech_news",
   {
     category: z
-      .enum(["technology", "ai", "cloud", "security", "devops", "all"])
+      .enum(["technology", "ai", "cloud", "security", "devops", "data", "all"])
       .default("all")
       .describe("News category to fetch"),
     maxResults: z
