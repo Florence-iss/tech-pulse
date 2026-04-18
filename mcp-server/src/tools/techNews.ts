@@ -102,6 +102,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "ai",
+      summary: "Major tech companies are racing to deploy AI-powered coding agents that can autonomously write, test, and deploy code, fundamentally reshaping how software teams operate. This shift represents a major paradigm change in dev tools, as code creation becomes more automated and error-resistant.",
     },
     {
       id: "sample2",
@@ -112,6 +113,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "devops",
+      summary: "The latest Kubernetes release introduces sidecar containers GA, improved pod security standards, and native support for confidential computing workloads. These enhancements drastically lower the overhead of operating complex microservices architectures securely at a large scale.",
     },
     {
       id: "sample3",
@@ -122,6 +124,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "cloud",
+      summary: "Amazon Web Services unveils Graviton5 chips promising 40% better price-performance for compute-intensive cloud applications and AI inference tasks. With native support for DDR6 memory, customers can expect faster model deployment times and reduced operating expenditures.",
     },
     {
       id: "sample4",
@@ -132,6 +135,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "security",
+      summary: "Federal mandate requires all government agencies to implement zero trust network architecture by 2027, driving massive demand for cybersecurity professionals. Vendors are pivoting aggressively to offer seamlessly integrated zero-trust tools that replace legacy VPNs.",
     },
     {
       id: "sample5",
@@ -142,6 +146,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "devops",
+      summary: "HashiCorp previews Terraform 2.0 with intelligent resource planning, automated drift detection, and AI-suggested infrastructure optimizations. The new declarative engine drastically improves state locking synchronization times across globally distributed dev teams.",
     },
     {
       id: "sample6",
@@ -152,6 +157,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "ai",
+      summary: "New model demonstrates near-human-level reasoning across text, images, video, and code simultaneously, opening doors for advanced AI assistants. Internal testing shows a 30% jump in contextual awareness over the previous iteration, marking a leap toward AGI methodologies.",
     },
     {
       id: "sample7",
@@ -162,6 +168,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "cloud",
+      summary: "A new survey reveals that nearly all large enterprises now use at least two cloud providers, with cost optimization and vendor lock-in avoidance as top drivers. The trend accelerates the need for hyper-agnostic deployment patterns such as Kubernetes across hybrid boundaries.",
     },
     {
       id: "sample8",
@@ -172,6 +179,7 @@ function getSampleTechNews(): Article[] {
       imageUrl: null,
       publishedAt: now,
       category: "technology",
+      summary: "Stack Overflow's annual developer survey shows Rust maintaining top spot for most desired language, with Go falling behind as systems programming evolves. Memory safety concerns have pushed enterprise development to rapidly rewrite critical backend C/C++ services into Rust.",
     },
   ];
 }

@@ -59,6 +59,18 @@ function initTabs() {
       switchTab(tab);
     });
   });
+
+  // Also allow clicking stat cards to switch tabs
+  $$('.stat-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const tab = card.dataset.tab;
+      if (tab) {
+        switchTab(tab);
+        // Ensure we scroll down slightly so the user sees the tab switch if on mobile
+        $('tabNav')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 }
 
 function switchTab(tab) {
