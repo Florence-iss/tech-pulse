@@ -5,12 +5,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL
   : '/api';
 
 async function fetchJSON(endpoint, params = {}) {
-  const url = new URL(endpoint, window.location.origin);
-
-  // When API_BASE is an absolute URL (production), construct it differently
-  const fullUrl = API_BASE.startsWith('http')
-    ? new URL(endpoint.replace('/api', ''), import.meta.env.VITE_API_BASE_URL)
-    : new URL(endpoint, window.location.origin);
+  const fullUrl = new URL(endpoint, window.location.origin);
 
   Object.entries(params).forEach(([key, val]) => {
     if (val !== undefined && val !== null && val !== '') {
