@@ -181,5 +181,16 @@ function getSampleTechNews(): Article[] {
       category: "technology",
       summary: "Stack Overflow's annual developer survey shows Rust maintaining top spot for most desired language, with Go falling behind as systems programming evolves. Memory safety concerns have pushed enterprise development to rapidly rewrite critical backend C/C++ services into Rust.",
     },
+    {
+      id: "sample9",
+      title: "Apache Spark 4.0 Introduces Native AI Pipeline Integrations",
+      description: "The latest monumental release of Apache Spark brings massive speed improvements to big data ETL jobs and offers built-in streaming integrations for training LLMs directly on data lakes.",
+      source: "Data Engineering Weekly",
+      url: "https://dataengineeringweekly.com",
+      imageUrl: null,
+      publishedAt: now,
+      category: "data",
+      summary: "With the release of Apache Spark 4.0, data engineers can now natively orchestrate machine learning pipelines and LLM training over massive data lakes without needing to dump data into intermediate stores. This release drastically cuts down latency and computes costs for complex big data transforms.",
+    },
   ];
 }
