@@ -37,8 +37,16 @@ export async function fetchCloudUpdates(provider = 'all', max = 15) {
   return fetchJSON(`${API_BASE}/cloud-updates`, { provider, max });
 }
 
+export async function fetchBigTechNews(company = 'all', max = 15) {
+  return fetchJSON(`${API_BASE}/big-tech`, { company, max });
+}
+
 export async function searchNews(query, max = 10) {
   return fetchJSON(`${API_BASE}/search`, { q: query, max });
+}
+
+export async function fetchCompanyResearch(company) {
+  return fetchJSON(`${API_BASE}/company-research`, { company });
 }
 
 export async function fetchTrending(limit = 10) {
@@ -47,4 +55,8 @@ export async function fetchTrending(limit = 10) {
 
 export async function fetchRecommendations(limit = 6) {
   return fetchJSON(`${API_BASE}/recommendations`, { limit });
+}
+
+export async function fetchStockPulse() {
+  return fetchJSON(`${API_BASE}/stock-pulse`);
 }

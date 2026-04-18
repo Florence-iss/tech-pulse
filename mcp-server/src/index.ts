@@ -4,10 +4,11 @@ import { z } from "zod";
 import { fetchTechNews } from "./tools/techNews.js";
 import { fetchCloudUpdates } from "./tools/cloudUpdates.js";
 import { searchNews } from "./tools/searchNews.js";
+import { getCompanyIntelligence } from "./tools/companyResearch.js";
+import { fetchBigTechNews } from "./tools/bigTech.js";
 import { getTrending } from "./tools/trending.js";
-import { getRecommendations } from "./tools/recommendations.js"; // Import recommendations
-
-
+import { getRecommendations } from "./tools/recommendations.js";
+import { getStockPulse } from "./tools/stockPulse.js";
 const server = new McpServer({
   name: "tech-pulse-news",
   version: "1.0.0",
@@ -186,6 +187,106 @@ server.tool(
           {
             type: "text",
             text: JSON.stringify(recommendations, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ error: error.message }),
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+);
+
+// Tool: Get stock pulse for major tech companies
+server.tool(
+  "get_stock_pulse",
+  {},
+  async () => {
+    try {
+      const pulse = await getStockPulse();
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(pulse, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ error: error.message }),
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+);
+
+// Tool: Fetch big tech news
+server.tool(
+  "fetch_big_tech_news",
+  {
+    company: z
+      .enum(["apple", "microsoft", "google", "meta", "amazon", "nvidia", "openai", "all"])
+      .default("all")
+      .describe("Big tech company to fetch news for"),
+    maxResults: z
+      .number()
+      .min(1)
+      .max(50)
+      .default(15)
+      .describe("Maximum results"),
+  },
+  async ({ company, maxResults }) => {
+    try {
+      const news = await fetchBigTechNews(company, maxResults);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(news, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ error: error.message }),
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+);
+
+// Tool: Get Company Intelligence
+server.tool(
+  "company_research",
+  {
+    company: z.string().describe("Name of the company to research"),
+  },
+  async ({ company }) => {
+    try {
+      const intel = await getCompanyIntelligence(company);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(intel, null, 2),
           },
         ],
       };

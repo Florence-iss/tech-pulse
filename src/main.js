@@ -1,4 +1,4 @@
-import { fetchTechNews, fetchCloudUpdates, searchNews, fetchTrending, fetchRecommendations } from './services/api.js';
+import { fetchTechNews, fetchCloudUpdates, fetchBigTechNews, searchNews, fetchCompanyResearch, fetchTrending, fetchRecommendations, fetchStockPulse } from './services/api.js';
 import {
   timeAgo, truncate, debounce,
   getCategoryBadgeClass, getCategoryLabel,
@@ -12,6 +12,7 @@ import {
 let currentTab = 'news';
 let newsData = [];
 let cloudData = [];
+let bigTechData = [];
 let trendingData = [];
 let recommendationsData = [];
 let autoRefreshTimer = null;
@@ -87,6 +88,34 @@ function capitalize(str) {
 // ===========================
 // Data Loading
 // ===========================
+async function loadStockPulse() {
+  const tickerContainer = $('marketTicker');
+  if (!tickerContainer) return;
+  
+  try {
+    const pulse = await fetchStockPulse();
+    
+    // Create HTML for pulse
+    const html = pulse.map(p => {
+      const isPositive = p.change >= 0;
+      const sign = isPositive ? '+' : '';
+      const changeClass = isPositive ? 'positive' : 'negative';
+      return `
+        <div class="ticker-item">
+          <span class="ticker-symbol">${p.symbol}</span>
+          <span class="ticker-price">$${p.price.toFixed(2)}</span>
+          <span class="ticker-change ${changeClass}">${sign}${p.change.toFixed(2)} (${sign}${p.changePercent.toFixed(2)}%)</span>
+        </div>
+      `;
+    }).join('');
+
+    // Duplicate content once to create a seamless infinite scrolling illusion
+    tickerContainer.innerHTML = html + html;
+  } catch (err) {
+    tickerContainer.innerHTML = '<span class="ticker-item" style="color:red;">Market data unavailable</span>';
+  }
+}
+
 async function loadTabData(tab) {
   switch (tab) {
     case 'news':
@@ -94,6 +123,9 @@ async function loadTabData(tab) {
       break;
     case 'cloud':
       if (cloudData.length === 0) await loadCloud();
+      break;
+    case 'bigtech':
+      if (bigTechData.length === 0) await loadBigTech();
       break;
     case 'trending':
       if (trendingData.length === 0) await loadTrending();
@@ -133,6 +165,18 @@ async function loadCloud(provider = 'all') {
   }
 }
 
+async function loadBigTech(company = 'all') {
+  const grid = $('bigtechGrid');
+  renderSkeletons(grid, 6);
+
+  try {
+    bigTechData = await fetchBigTechNews(company, 15);
+    renderNewsCards(grid, bigTechData, true);
+  } catch (err) {
+    grid.innerHTML = renderEmptyState('🏢', 'Unable to load Big Tech news.');
+  }
+}
+
 async function loadTrending() {
   const grid = $('trendingGrid');
   renderSkeletons(grid, 6, 'skeleton-trending');
@@ -160,17 +204,40 @@ async function loadRecommendations() {
 
 async function handleSearch(query) {
   const grid = $('searchGrid');
+  const card = $('intelligenceCard');
   if (!query || query.trim().length < 2) {
-    grid.innerHTML = renderEmptyState('🔍', 'Type a keyword to search for technology news');
+    grid.innerHTML = renderEmptyState('🔍', 'Type a company name to generate an intelligence briefing');
+    card.style.display = 'none';
     return;
   }
 
   renderSkeletons(grid, 3);
+  card.style.display = 'none';
 
   try {
-    const results = await searchNews(query.trim(), 10);
+    // Fetch Intel & News in parallel
+    const [intel, results] = await Promise.all([
+      fetchCompanyResearch(query.trim()),
+      searchNews(query.trim(), 10)
+    ]);
+
+    // Render Intelligence Card
+    card.style.display = 'flex';
+    card.innerHTML = `
+      ${intel.thumbnail ? `<img src="${intel.thumbnail}" alt="${intel.name}" class="intelligence-thumb">` : ''}
+      <div class="intelligence-content">
+        <h3 class="intelligence-title">${intel.name}</h3>
+        <div class="intelligence-extract">${intel.extract}</div>
+        <a href="${intel.url}" target="_blank" class="intelligence-link">
+          Read Full Wikipedia Dossier ↗
+        </a>
+      </div>
+    `;
+
     renderNewsCards(grid, results);
   } catch (err) {
+    card.style.display = 'block';
+    card.innerHTML = `<div class="intelligence-error">Intelligence generation failed. Try a known tech company.</div>`;
     grid.innerHTML = renderEmptyState('🔍', 'Search failed. Please try again.');
   }
 }
@@ -461,6 +528,16 @@ function initFilters() {
     cloudData = [];
     loadCloud(provider);
   });
+
+  $('bigtechFilter')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.pill');
+    if (!btn) return;
+    const company = btn.dataset.company;
+    $$('#bigtechFilter .pill').forEach((p) => p.classList.remove('active'));
+    btn.classList.add('active');
+    bigTechData = [];
+    loadBigTech(company);
+  });
 }
 
 // ===========================
@@ -563,6 +640,7 @@ async function init() {
 
   // Load initial data in parallel
   await Promise.all([
+    loadStockPulse(),
     loadNews(),
     loadTrending(),
   ]);

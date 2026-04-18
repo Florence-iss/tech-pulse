@@ -87,6 +87,24 @@ app.get("/api/cloud-updates", async (req, res) => {
   }
 });
 
+// GET /api/big-tech
+app.get("/api/big-tech", async (req, res) => {
+  try {
+    const company = req.query.company || "all";
+    const maxResults = safeInt(req.query.max, 15);
+    const cacheKey = `big-tech:${company}:${maxResults}`;
+
+    const data = await cachedFetch(cacheKey, () =>
+      callMcpTool("fetch_big_tech_news", { company, maxResults })
+    );
+
+    res.json({ success: true, data, count: data.length });
+  } catch (error) {
+    console.error("Big tech error:", error.message);
+    res.status(500).json({ success: false, error: "Failed to fetch big tech news" });
+  }
+});
+
 // GET /api/search
 app.get("/api/search", async (req, res) => {
   try {
@@ -109,6 +127,26 @@ app.get("/api/search", async (req, res) => {
   } catch (error) {
     console.error("Search error:", error.message);
     res.status(500).json({ success: false, error: "Failed to search news" });
+  }
+});
+
+// GET /api/company-research
+app.get("/api/company-research", async (req, res) => {
+  try {
+    const company = req.query.company;
+    if (!company) {
+      return res.status(400).json({ success: false, error: "Company parameter is required" });
+    }
+    const cacheKey = `company-research:${company.toLowerCase()}`;
+
+    const data = await cachedFetch(cacheKey, () =>
+      callMcpTool("company_research", { company })
+    );
+
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error("Company research error:", error.message);
+    res.status(500).json({ success: false, error: "Failed to fetch company intelligence" });
   }
 });
 
@@ -147,6 +185,22 @@ app.get("/api/recommendations", async (req, res) => {
   } catch (error) {
     console.error("Recommendations error:", error.message);
     res.status(500).json({ success: false, error: "Failed to get recommendations" });
+  }
+});
+
+// GET /api/stock-pulse
+app.get("/api/stock-pulse", async (req, res) => {
+  try {
+    const cacheKey = `stock-pulse`;
+    const data = await cachedFetch(
+      cacheKey,
+      () => callMcpTool("get_stock_pulse", {}),
+      300 // 5-minute cache
+    );
+    res.json({ success: true, data, count: data.length });
+  } catch (error) {
+    console.error("Stock pulse error:", error.message);
+    res.status(500).json({ success: false, error: "Failed to get stock pulse" });
   }
 });
 

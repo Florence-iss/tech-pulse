@@ -31,6 +31,13 @@
       </div>
     </header>
 
+    <!-- Market Ticker -->
+    <div class="market-ticker-container">
+      <div class="market-ticker" id="marketTicker">
+        <!-- Stock items rendered by JS -->
+      </div>
+    </div>
+
     <!-- Stats Bar -->
     <section class="stats-bar" id="statsBar">
       <div class="stat-card" data-tab="news" style="cursor: pointer;">
@@ -69,6 +76,10 @@
         <span class="tab-icon">🌐</span>
         <span class="tab-text">Tech News</span>
       </button>
+      <button class="tab-btn" data-tab="bigtech" id="tabBigTech">
+        <span class="tab-icon">🏢</span>
+        <span class="tab-text">Big Tech</span>
+      </button>
       <button class="tab-btn" data-tab="cloud" id="tabCloud">
         <span class="tab-icon">☁️</span>
         <span class="tab-text">Cloud</span>
@@ -82,8 +93,8 @@
         <span class="tab-text">Learn</span>
       </button>
       <button class="tab-btn" data-tab="search" id="tabSearch">
-        <span class="tab-icon">🔍</span>
-        <span class="tab-text">Search</span>
+        <span class="tab-icon">🕵️</span>
+        <span class="tab-text">Research</span>
       </button>
       <button class="tab-btn" data-tab="bookmarks" id="tabBookmarks">
         <span class="tab-icon">🔖</span>
@@ -136,6 +147,26 @@
         </div>
       </section>
 
+      <!-- Big Tech Tab -->
+      <section class="tab-panel" id="panelBigtech">
+        <div class="panel-header">
+          <h2>Big Tech Radar</h2>
+          <div class="filter-pills" id="bigtechFilter">
+            <button class="pill active" data-company="all">All Giants</button>
+            <button class="pill" data-company="apple">🍎 Apple</button>
+            <button class="pill" data-company="microsoft">🪟 Microsoft</button>
+            <button class="pill" data-company="google">🔍 Google</button>
+            <button class="pill" data-company="meta">♾️ Meta</button>
+            <button class="pill" data-company="amazon">📦 Amazon</button>
+            <button class="pill" data-company="nvidia">🟩 Nvidia</button>
+            <button class="pill" data-company="openai">🧠 OpenAI</button>
+          </div>
+        </div>
+        <div class="news-grid" id="bigtechGrid">
+          <!-- Big Tech cards rendered by JS -->
+        </div>
+      </section>
+
       <!-- Trending Tab -->
       <section class="tab-panel" id="panelTrending">
         <div class="panel-header">
@@ -158,28 +189,29 @@
         </div>
       </section>
 
-      <!-- Search Tab -->
+      <!-- Research Tab -->
       <section class="tab-panel" id="panelSearch">
         <div class="panel-header">
-          <h2>Search Technology News</h2>
+          <h2>Market Intelligence</h2>
+          <p class="panel-subtitle">Search for any company to generate a deep-dive intelligence briefing.</p>
         </div>
         <div class="search-container">
           <div class="search-input-wrapper">
             <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search for any technology topic..." autocomplete="off" />
+            <input type="text" class="search-input" id="searchInput" placeholder="Enter a company name (e.g. Robinhood, Anthropic)" autocomplete="off" />
           </div>
           <div class="search-suggestions" id="searchSuggestions">
-            <span class="suggestion-chip" data-query="artificial intelligence">AI/ML</span>
-            <span class="suggestion-chip" data-query="kubernetes">Kubernetes</span>
-            <span class="suggestion-chip" data-query="cloud computing">Cloud</span>
-            <span class="suggestion-chip" data-query="cybersecurity">Security</span>
-            <span class="suggestion-chip" data-query="data engineering">Data</span>
-            <span class="suggestion-chip" data-query="DevOps">DevOps</span>
-            <span class="suggestion-chip" data-query="rust programming">Rust</span>
-            <span class="suggestion-chip" data-query="blockchain web3">Web3</span>
+            <span class="suggestion-chip" data-query="Anthropic">Anthropic</span>
+            <span class="suggestion-chip" data-query="Stripe">Stripe</span>
+            <span class="suggestion-chip" data-query="SpaceX">SpaceX</span>
+            <span class="suggestion-chip" data-query="Databricks">Databricks</span>
+            <span class="suggestion-chip" data-query="Hugging Face">Hugging Face</span>
           </div>
         </div>
-        <div class="news-grid" id="searchGrid">
+        <div class="intelligence-card" id="intelligenceCard" style="display: none;">
+          <!-- Intelligence Layout rendered by JS -->
+        </div>
+        <div class="news-grid" id="searchGrid" style="margin-top: 2rem;">
           <!-- Search results rendered by JS -->
         </div>
       </section>
