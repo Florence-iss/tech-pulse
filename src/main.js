@@ -266,6 +266,11 @@ function renderNewsCards(container, articles, showProvider = false) {
   container.innerHTML = cardsHtml;
 
   container.addEventListener('click', (e) => {
+    // Prevent the card from opening the external link when interacting with the summary
+    if (e.target.closest('.card-summary')) {
+      return;
+    }
+
     const bookmarkBtn = e.target.closest('.bookmark-btn');
     if (bookmarkBtn) {
       e.stopPropagation();

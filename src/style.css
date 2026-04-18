@@ -1162,4 +1162,23 @@ a:hover {
   line-height: 1.5;
   border-top: 1px dashed var(--border-subtle);
   padding-top: var(--space-sm);
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+  font-size: 0.82rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-active) transparent;
+}
+
+.summary-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.summary-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.summary-content::-webkit-scrollbar-thumb {
+  background: var(--border-active);
+  border-radius: 4px;
 }
