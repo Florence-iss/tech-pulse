@@ -64,6 +64,7 @@ async function parseFeed(config: FeedConfig, maxResults: number): Promise<Articl
       id: generateId(item.title || "", config.provider),
       title: item.title || "Untitled",
       description: (item.contentSnippet || item.content || "").slice(0, 300),
+      summary: item.content || item.contentSnippet || "",
       source: config.provider,
       url: item.link || config.url,
       imageUrl: item.enclosure?.url || null,

@@ -55,6 +55,7 @@ async function fetchFromGNews(
       id: generateId(article.title, article.source.name),
       title: article.title,
       description: article.description || "",
+      summary: article.content,
       source: article.source.name,
       url: article.url,
       imageUrl: article.image,

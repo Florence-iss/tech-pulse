@@ -238,6 +238,12 @@ function renderNewsCards(container, articles, showProvider = false) {
             </div>
             <h3 class="card-title">${article.title}</h3>
             <p class="card-description">${truncate(article.description, 160)}</p>
+            ${article.summary && article.summary !== article.description ? `
+              <details class="card-summary">
+                <summary>View Summary</summary>
+                <div class="summary-content">${article.summary.replace(/\\n/g, '<br/>')}</div>
+              </details>
+            ` : ''}
             <div class="card-footer">
               <span class="category-badge ${badgeClass}">${badgeLabel}</span>
               ${providerBadge}

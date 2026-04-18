@@ -2,6 +2,7 @@ export interface Article {
   id: string;
   title: string;
   description: string;
+  summary?: string;
   source: string;
   url: string;
   imageUrl: string | null;
