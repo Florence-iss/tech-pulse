@@ -206,4 +206,4 @@ server.tool(
 // Start server with stdio transport
 const transport = new StdioServerTransport();
 await server.connect(transport);
-console.error("Tech Pulse MCP Server running on stdio");
+console.error("Tech Thump MCP Server running on stdio");

@@ -47,9 +47,8 @@ function safeInt(value, fallback) {
 
 // --- API Routes ---
 
-// GET /
 app.get("/", (req, res) => {
-  res.send("🚀 Tech Pulse API is up and running! Access endpoints via /api/");
+  res.send("🚀 Tech Thump API is up and running! Access endpoints via /api/");
 });
 
 // GET /api/tech-news
@@ -170,7 +169,7 @@ app.use("/api/*", (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`\n🚀 Tech Pulse API running on http://localhost:${PORT}`);
+  console.log(`\n🚀 Tech Thump API running on http://localhost:${PORT}`);
   console.log(`   📡 Tech News:       GET /api/tech-news?category=all&max=20`);
   console.log(`   ☁️  Cloud Updates:   GET /api/cloud-updates?provider=all&max=15`);
   console.log(`   🔍 Search:          GET /api/search?q=kubernetes&max=10`);
