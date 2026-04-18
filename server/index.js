@@ -8,6 +8,11 @@ import { cachedFetch, getCacheStats } from "./cache.js";
 dotenv.config({ path: "../.env" });
 
 const app = express();
+
+// Trust the reverse proxy (Render) so rate limiting uses the correct client IP
+// and avoids the ERR_ERL_UNEXPECTED_X_FORWARDED_FOR error.
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
